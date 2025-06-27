@@ -19,9 +19,11 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Restore dependencies
+        working-directory: backend/src
         run: dotnet restore
 
       - name: Run unit tests
+        working-directory: backend/src
         run: dotnet test --no-restore --verbosity normal
 
       - name: Install Docker Compose
