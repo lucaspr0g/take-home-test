@@ -1,0 +1,36 @@
+<style>
+table, td, th {
+  border: 1px solid;
+}
+
+table {
+  border-collapse: collapse;
+}
+</style>
+
+<main class="main">
+  <div class="content">
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Applicant Name</th>
+        <th>Amount Request</th>
+        <th>Current Balance</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        @for(loan of loans; track loan.id) {
+          <tr>
+            <td>{{loan.id}}</td>
+            <td>{{loan.applicantName}}</td>
+            <td>{{loan.amount}}</td>
+            <td>{{loan.currentBalance}}</td>
+            <td>{{loan.status}}</td>
+          </tr>
+        } @empty {
+          <tr>No loans found</tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</main>

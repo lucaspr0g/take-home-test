@@ -1,6 +1,7 @@
 ## Running the Backend
 
-To build the backend, navigate to the `src` folder and run:  
+### 1. Start the backend
+To start the backend, navigate to the `src` folder and run:  
 ```sh
 dotnet build
 ```
@@ -18,9 +19,14 @@ dotnet run
 
 The following endpoint should return **200 OK**:  
 ```http
-GET -> https://localhost:5001/loan
+GET -> API: http://localhost:60992/loans
 ```
 
-## Notes  
+### 2. Start the backend with SQL Server via Docker
+To start the backend and database, navigate to the `src` folder and run:  
+```sh
+docker-compose up --build
+```
+- API: http://localhost:60992
+- SQL Server: localhost:1433 
 
-Feel free to modify the code as needed, but try to **respect and extend the current architecture**, as this is intended to be a replica of the Fundo codebase.

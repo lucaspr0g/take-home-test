@@ -1,83 +1,62 @@
-# **Take-Home Test: Backend-Focused Full-Stack Developer (.NET C# & Angular)**
+# Fundo Loan Management System
 
-## **Objective**
+A simple full-stack application for managing loans.
 
-This take-home test evaluates your ability to develop and integrate a .NET Core (C#) backend with an Angular frontend, focusing on API design, database integration, and basic DevOps practices.
+## Stack
+- **Backend:** ASP.NET Core Web API + SQL Server (Docker)
+- **Frontend:** Angular
 
-## **Instructions**
+## Prerequisites
+- Docker
+- .NET 6 SDK
+- Node.js (v16+)
+- npm
+- Angular CLI (`npm install -g @angular/cli`)
 
-1.  **Fork the provided repository** before starting the implementation.
-2.  Implement the requested features in your forked repository.
-3.  Once you have completed the implementation, **send the link** to your forked repository via email for review.
+## Getting Started
 
-## **Task**
+### 1. Clone the repository
+```sh
+git clone <repo-url>
+```
 
-You will build a simple **Loan Management System** with a **.NET Core backend (C#)** exposing RESTful APIs and a **basic Angular frontend** consuming these APIs.
+### 2. Start the backend (API + Database)
+```sh
+cd backend/src
+docker-compose up --build
+```
+- API: http://localhost:60992
+- SQL Server: localhost:1433
 
----
+### 3. Start the frontend
+```sh
+cd frontend
+npm install
+ng serve
+```
+- App: http://localhost:4200
 
-## **Requirements**
+The frontend expects the backend running at `http://localhost:60992/`.
 
-### **1. Backend (API) - .NET Core**
+## Project Structure
+- **Backend:** API, business logic, data, tests, Docker setup
+- **Frontend:** Main component, models, UI, styles
 
-* Create a **RESTful API** in .NET Core to handle **loan applications**.
-* Implement the following endpoints:
-    * `POST /loans` → Create a new loan.
-    * `GET /loans/{id}` → Retrieve loan details.
-    * `GET /loans` → List all loans.
-    * `POST /loans/{id}/payment` → Deduct from `currentBalance`.
-* Loan example (feel free to improve it):
-
-    ```json
-    {
-        "amount": 1500.00, // Amount requested
-        "currentBalance": 500.00, // Remaining balance
-        "applicantName": "Maria Silva", // User name
-        "status": "active" // Status can be active or paid
-    }
-    ```
-
-* Use **Entity Framework Core** with **SQL Server**.
-* Create seed data to populate the loans (the frontend will consume this).
-* Write **unit/integration tests for the API** (xUnit or NUnit).
-* **Dockerize** the backend and create a **Docker Compose** file.
-* Create a README with setup instructions.
-
-### **2. Frontend - Angular (Simplified UI)**  
-
-Develop a **lightweight Angular app** to interact with the backend
-
-#### **Features:**  
-- A **table** to display a list of existing loans.  
-
-#### **Mockup:**  
-[View Mockup](https://kzmgtjqt0vx63yji8h9l.lite.vusercontent.net/)  
-(*The design doesn’t need to be an exact replica of the mockup—it serves as a reference. Aim to keep it as close as possible.*)  
+## Useful Commands
+- Run backend tests:
+  ```sh
+  dotnet test Fundo.Services.Tests/Fundo.Services.Tests.csproj
+  ```
+- Run API locally (no Docker):
+  ```sh
+  dotnet run --project Fundo.Applications.WebApi/Fundo.Applications.WebApi.csproj
+  ```
 
 ---
 
-## **Bonus (Optional, Not Required)**
+- The database is initialized automatically when Docker starts.
+- The frontend authenticates with a ClientId and fetches a token before loading loans.
 
-* **Improve error handling and logging** with structured logs.
-* Implement **authentication**.
-* Create a **GitHub Actions** pipeline for building and testing the backend.
+## About the development
 
----
-
-## **Evaluation Criteria**
-
-✔ **Code quality** (clean architecture, modularization, best practices).
-
-✔ **Functionality** (the API and frontend should work as expected).
-
-✔ **Security considerations** (authentication, validation, secure API handling).
-
-✔ **Testing coverage** (unit tests for critical backend functions).
-
-✔ **Basic DevOps implementation** (Docker for backend).
-
----
-
-## **Additional Information**
-
-Candidates are encouraged to include a `README.md` file in their repository detailing their implementation approach, any challenges they faced, features they couldn't complete, and any improvements they would make given more time. Ideally, the implementation should be completed within **two days** of starting the test.
+I tried to create a simple application on Clean architecture and following some best practices of software development. If I had more time, I would improve some features to demonstrate more knoledge, like creating some use case rules and applying properly their validations, some logs for helping tracing application problems and also create more accuracy unit test cases.

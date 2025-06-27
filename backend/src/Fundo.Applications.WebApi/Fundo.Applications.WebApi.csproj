@@ -9,4 +9,14 @@
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fundo.Applications.UseCases\Fundo.Applications.UseCases.csproj" />
+    <ProjectReference Include="..\Fundo.Infrastructure.Data\Fundo.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
 </Project>

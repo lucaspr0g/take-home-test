@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "pwd123456@"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -U sa -P pwd123456@ -Q 'SELECT 1' -C || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sql-init:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: >
+      sh -c "
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P pwd123456@ -i /scripts/init.sql
+      "
+
+  loan-management-api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: loan-management-api
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Fundo;User=sa;Password=pwd123456@;TrustServerCertificate=True;"
+      Jwt__Issuer: "fundo-app"
+      Jwt__Audience: "fundo-app"
+      Jwt__SecretKey: "9fca84310dfc389f76246b38b39a51a3"
+      ClientKey: "9d2b1b34f3679601737cc7e3eddaf01f"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "60992:80"

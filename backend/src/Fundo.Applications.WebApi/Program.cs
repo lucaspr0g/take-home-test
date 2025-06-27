@@ -1,31 +1,44 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Fundo.Applications.WebApi
 {
-    public static class Program
+	[ExcludeFromCodeCoverage]
+	public static class Program
     {
         public static void Main(string[] args)
         {
-            try
+			Log.Logger = new LoggerConfiguration()
+	            .Enrich.FromLogContext()
+	            .WriteTo.Console()
+	            .MinimumLevel.Information()
+	            .CreateLogger();
+
+			try
             {
-                CreateWebHostBuilder(args).Build().Run();
+				Log.Information("Starting web application");
+
+				CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unhandled WebApi exception: {ex.Message}");
+				Log.Fatal(ex, $"Unhandled WebApi exception: {ex.Message}");
             }
             finally
             {
-                Console.WriteLine("Application shutting down.");
-            }
-        }
+				Log.Information("Application shutting down.");
+				Log.CloseAndFlush();
+			}
+		}
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseSerilog();
         }
     }
 }
