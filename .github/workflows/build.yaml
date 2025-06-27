@@ -19,16 +19,16 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install dependencies
+        working-directory: backend/src
         run: dotnet restore
 
       - name: Build
+        working-directory: backend/src
         run: dotnet build --no-restore
 
       - name: Test
+        working-directory: backend/src
         run: dotnet test --no-build --verbosity normal
-
-      - name: Publish
-        run: dotnet publish -c Release -o out
 
       - name: Build and run Docker Compose
         working-directory: backend/src
