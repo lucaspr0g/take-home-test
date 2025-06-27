@@ -37,10 +37,10 @@ jobs:
         working-directory: backend/src
         run: |
           docker-compose ps
-          sleep 30
+          sleep 10
 
       - name: Run tests inside container
-        run: docker-compose exec app dotnet test --verbosity normal
+        run: docker-compose exec loan-management-api dotnet test --verbosity normal
 
       - name: Show logs
         working-directory: backend/src
