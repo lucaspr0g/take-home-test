@@ -10,3 +10,25 @@ jobs:
   build-test-and-run:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and run Docker Compose
+        run: |
+          cd backend/src
+          docker-compose up -d --build
+
+      - name: Wait for services to be healthy
+        run: |
+          docker-compose ps
+          sleep 30
+
+      - name: Show logs
+        run: docker-compose logs
+
+      - name: Tear down
+        if: always()
+        run: docker-compose down
