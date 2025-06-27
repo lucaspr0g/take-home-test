@@ -17,18 +17,20 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and run Docker Compose
-        run: |
-          cd ..\..\backend\src
-          docker-compose up -d --build
+        working-directory: backend/src
+        run: docker-compose up -d --build
 
       - name: Wait for services to be healthy
+        working-directory: backend/src
         run: |
           docker-compose ps
           sleep 30
 
       - name: Show logs
+        working-directory: backend/src
         run: docker-compose logs
 
       - name: Tear down
         if: always()
+        working-directory: backend/src
         run: docker-compose down
