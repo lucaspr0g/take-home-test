@@ -40,7 +40,7 @@ jobs:
           sleep 30
 
       - name: Run tests inside container
-        run: docker-compose exec app dotnet test
+        run: docker-compose exec app dotnet test --verbosity normal
 
       - name: Show logs
         working-directory: backend/src
