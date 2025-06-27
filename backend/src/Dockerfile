@@ -6,8 +6,7 @@ COPY ["Fundo.Applications.UseCases/Fundo.Applications.UseCases.csproj", "Fundo.A
 COPY ["Fundo.Applications.WebApi/Fundo.Applications.WebApi.csproj", "Fundo.Applications.WebApi/"]
 COPY ["Fundo.Core/Fundo.Core.csproj", "Fundo.Core/"]
 COPY ["Fundo.Infrastructure.Data/Fundo.Infrastructure.Data.csproj", "Fundo.Infrastructure.Data/"]
-# COPY ["Fundo.Services.Tests/Fundo.Services.Tests.csproj", "Fundo.Services.Tests/"]
-RUN dotnet restore "./*.sln"
+RUN dotnet restore "Fundo.Applications.WebApi/Fundo.Applications.WebApi.csproj"
 COPY . .
 RUN dotnet build "Fundo.Applications.WebApi/Fundo.Applications.WebApi.csproj" -c Release -o /app/build
 
