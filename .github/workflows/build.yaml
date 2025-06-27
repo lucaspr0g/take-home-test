@@ -39,10 +39,12 @@ jobs:
           docker-compose ps
           sleep 5
 
-      - name: Run tests
+      - name: Uses .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6.0.x'
+
+      - name: Run tests
         run: dotnet test --no-restore --verbosity normal
         # run: docker-compose exec loan-management-api dotnet test --verbosity normal
 
