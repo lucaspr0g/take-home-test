@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and run Docker Compose
         run: |
-          cd backend/src
+          cd ../../backend/src
           docker-compose up -d --build
 
       - name: Wait for services to be healthy
