@@ -13,18 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '6.0.x'
+      # - name: Setup .NET SDK
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: '6.0.x'
 
-      - name: Restore dependencies
-        working-directory: backend/src
-        run: dotnet restore
+      # - name: Restore dependencies
+      #   working-directory: backend/src
+      #   run: dotnet restore
 
-      - name: Run unit tests
-        working-directory: backend/src
-        run: dotnet test --no-restore --verbosity normal
+      # - name: Run unit tests
+      #   working-directory: backend/src
+      #   run: dotnet test --no-restore --verbosity normal
 
       - name: Install Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
@@ -38,6 +38,9 @@ jobs:
         run: |
           docker-compose ps
           sleep 30
+
+      - name: Run tests inside container
+        run: docker-compose exec app dotnet test
 
       - name: Show logs
         working-directory: backend/src
