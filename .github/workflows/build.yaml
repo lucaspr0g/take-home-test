@@ -18,8 +18,17 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
-      - name: Install Docker Compose
-        run: sudo apt-get update && sudo apt-get install -y docker-compose
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Publish
+        run: dotnet publish -c Release -o out
 
       - name: Build and run Docker Compose
         working-directory: backend/src
@@ -31,19 +40,8 @@ jobs:
           docker-compose ps
           sleep 5
 
-      - name: List test files
-        working-directory: backend/src/Fundo.Services.Tests
-        run: ls -la
-
       - name: Run tests
         working-directory: backend/src
-        run: dotnet test Fundo.Services.Tests/Fundo.Services.Tests.csproj --no-build --verbosity normal
-
-      - name: Show logs
-        working-directory: backend/src
-        run: docker-compose logs
-
-      - name: Tear down
-        if: always()
-        working-directory: backend/src
-        run: docker-compose down
+        env:
+          ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=Fundo;User=sa;Password=pwd123456@;TrustServerCertificate=True;"
+        run: dotnet test Fundo.Services.Tests/Fundo.Services.Tests.csproj --no-build --verbosity detailed
