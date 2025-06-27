@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         working-directory: backend/src
-        run: dotnet test Fundo.Services.Tests/Fundo.Services.Tests.csproj --no-restore --logger "console;verbosity=detailed"
+        run: dotnet test Fundo.Services.Tests/Fundo.Services.Tests.csproj --no-build --verbosity normal
 
       - name: Show logs
         working-directory: backend/src
