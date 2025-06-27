@@ -45,7 +45,8 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Run tests
-        run: dotnet test --no-restore --verbosity normal
+        working-directory: backend/src
+        run: dotnet test src.sln --no-restore --verbosity normal
         # run: docker-compose exec loan-management-api dotnet test --verbosity normal
 
       - name: Show logs
